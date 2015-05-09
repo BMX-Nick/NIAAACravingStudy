@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.missouri.niaaa.craving"
+    android:versionCode="050"
+    android:versionName="2.3" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+<!--     <uses-permission android:name="android.permission.DEVICE_POWER" /> -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        
+         <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".services.SensorLocationService" />
+        
+        <service
+            android:name=".ActivityRecognitionService"
+            android:process=":remote" >
+        </service>
+        
+        <receiver
+            android:name=".SurveyBroadcast"
+            android:permission=".SurveyBroadcast"
+            android:process=":remote">
+            <intent-filter>
+				<action android:name="edu.missouri.niaaa.craving.ACTION_SCHEDULE_ALL" />
+				<action android:name="edu.missouri.niaaa.craving.REMINDER" />
+				<action android:name="edu.missouri.niaaa.craving.SUSPENSION" />
+				
+				<action android:name="edu.missouri.niaaa.craving.SCHEDULE_MORNING" />
+				<action android:name="edu.missouri.niaaa.craving.TRIGGER_MORNING" />
+				<action android:name="edu.missouri.niaaa.craving.SCHEDULE_RANDOM" />
+				<action android:name="edu.missouri.niaaa.craving.TRIGGER_RANDOM" />
+				<action android:name="edu.missouri.niaaa.craving.SCHEDUL_FOLLOWUP" />
+				<action android:name="edu.missouri.niaaa.craving.TRIGGER_FOLLOWUP" />
+				<action android:name="edu.missouri.niaaa.craving.REMINDER_MORNING" />
+				<action android:name="edu.missouri.niaaa.craving.REMINDER_RANDOM" />
+				<action android:name="edu.missouri.niaaa.craving.REMINDER_FOLLOWUP" />
+				<action android:name="edu.missouri.niaaa.craving.REMINDER_DRINKING" />
+				<action android:name="edu.missouri.niaaa.craving.REMINDER_MOOD" />
+				<action android:name="edu.missouri.niaaa.craving.REMINDER_CRAVING" />
+				
+<!-- 				<action android:name="android.intent.action.DATE_CHANGED" /> -->
+				
+            </intent-filter>
+        </receiver>
+        
+        <receiver
+            android:name=".StartupIntentReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>>
+        </receiver>
+        
+        <!-- Start Recording -->
+        <service android:name="edu.missouri.niaaa.craving.monitor.RecordingService"></service>
+        <receiver 
+            android:name="edu.missouri.niaaa.craving.monitor.StartupReceiver">
+            <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver 
+            android:name="edu.missouri.niaaa.craving.monitor.ShutdownReceiver">
+            <intent-filter>
+            <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="edu.missouri.niaaa.craving.monitor.RecordingReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="edu.missouri.niaaa.craving.monitor.ACTION_RECORD" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver 
+            android:name="edu.missouri.niaaa.craving.monitor.MonitorBluetoothReceiver">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED" />
+                <action android:name="android.bluetooth.device.action.BOND_STATE_CHANGED" />
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <!-- End Recording -->
+        
+        <receiver
+            android:name=".DaemonReceiver" 
+            android:exported="false" >
+            <intent-filter >
+<!--                 <action android:name="edu.missouri.niaaa.craving.DAEMON_NOON" /> -->
+<!--                 <action android:name="edu.missouri.niaaa.craving.DAEMON_MIDN" /> -->
+<!--                 <action android:name="edu.missouri.niaaa.craving.DAEMON_THRE" /> -->
+                <action android:name="edu.missouri.niaaa.craving.DAEMON" />
+            </intent-filter>
+        </receiver>
+            
+        <receiver
+            android:name=".location.LocationBroadcast"
+            android:exported="false"
+            >
+            <intent-filter >
+        		<action android:name="edu.missouri.niaaa.craving.START_LOCATION" />
+        		<action android:name="edu.missouri.niaaa.craving.STOP_LOCATION" />
+        	</intent-filter>    
+        </receiver>
+        
+        <activity
+            android:name=".activity.SupportActivity"
+            android:screenOrientation="portrait"
+            />
+        
+        <activity
+            android:name=".activity.AdminManageActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name=".activity.SuspensionTimePicker"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name=".activity.MorningScheduler"            
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name=".activity.SurveyMenu"
+            android:screenOrientation="portrait"
+            />
+        
+        <activity
+            android:name=".survey.XMLSurveyActivity"            
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        
+        <!-- for sensor -->
+        <activity
+            android:name=".sensor.SensorConnections"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".sensor.DeviceListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name=".activity.ChargeReminderActivity"
+            android:label="@string/title_activity_charge_reminder" >
+        </activity>
+        
+    </application>
+
+</manifest>

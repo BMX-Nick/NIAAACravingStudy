@@ -1,0 +1,44 @@
+<root>
+	<category>
+		<description>Drinking Follow-up</description>
+		
+		<!-- Here we don't use number picker because 0 is allowed here, to skip drinking related questions groups -->
+		<question id="q1201" type="radio">
+			<text>HOW MANY DRINKS did you consume SINCE THE LAST RECORDING?</text>
+			<answer id="0" skip="q1202">0</answer>
+			<answer id="1" triggerFile="DrinkingFollowupParcel.xml">1</answer>
+			<answer id="2" triggerFile="DrinkingFollowupParcel.xml">2</answer>
+			<answer id="3" triggerFile="DrinkingFollowupParcel.xml">3</answer>
+			<answer id="4" triggerFile="DrinkingFollowupParcel.xml">4</answer>
+			<answer id="5" triggerFile="DrinkingFollowupParcel.xml">5</answer>
+			<answer id="6" triggerFile="DrinkingFollowupParcel.xml">6+</answer>
+		</question>
+	</category>
+
+	<externalsource baseid="q3" filename="DrinkingMotivation.xml"></externalsource>
+	<externalsource baseid="q4" filename="DrinkingEffects.xml"></externalsource>
+
+	<category>
+		<description>Recent Smoking</description>
+		<question id= "q1202" type = "radio">
+			<text>Have you SMOKED A CIGARETTE since THE LAST RECORDING?</text>
+			<answer id = "1">Yes</answer>
+			<answer id = "2" skip="q101">No</answer>
+		</question>
+		<question id = "q1203" type = "number">
+			<text>HOW MANY CIGARETTES did you smoke since THE LAST RECORDING?</text>
+			<answer id = "item">cigarette(s)</answer>
+			<answer id = "min">1</answer>
+			<answer id = "max">24</answer>
+		</question>
+	</category>
+
+	<externalsource baseid="q3" filename="SmokingMotivation.xml"></externalsource>
+	<externalsource baseid="q4" filename="SmokingEffects.xml"></externalsource>
+	
+	<externalsource baseid="q1" filename="MoodSubset.xml"></externalsource>
+	
+	<externalsource baseid="q5" filename="CravingsAndSymptomsSubset.xml"></externalsource>
+	<externalsource baseid="q6" filename="SituationAndSetting.xml"></externalsource>
+
+</root>
